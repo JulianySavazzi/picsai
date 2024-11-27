@@ -1,37 +1,12 @@
 import express from "express"
+import routes from "./src/routes/routes.js";
 
 const app = express() //init express - node server
-app.use(express.json()) //for all responses parsed for json
+app.use(express.static("uploads")) //public directory configuration for upload images
+routes(app) //add routes in server
 
 //listen requests in port
 app.listen(3000, () => {
     console.log("server listening...")
 })
 
-
-
-// function getPostById(id){
-//     return dataMocked.findIndex((data) => {
-//           return data.id === Number(id)
-//     })
-// }
-
-//routes
-
-app.get("/", (request, response) => {
-    response.status(200).json('welcome')
-})
-
-app.get("/api", (request, response) => {
-    response.status(200).send("success")
-})
-
-app.get("/posts", async (request, response) => {
-    const posts = await getAllPosts()
-    response.status(200).json(posts)
-})
-
-// app.get("/posts/:id", (request, response) => {
-//     const index = getPostById(request.params.id)
-//     response.status(200).json(dataMocked[index])
-// })

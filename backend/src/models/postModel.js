@@ -12,6 +12,13 @@ export async function getAllPosts() {
     return collection.find().toArray()
 }
 
+//get single post by id
+export function getPostById(id){
+    const collection = db.collection('posts')
+    const filter = {_id: new ObjectId(id)} //filter mongo ObjectId for select post in collection
+    return collection.findOne(filter)
+}
+
 //save post in collection posts, using inserOne for insert an unic post for each
 export async function createPost(post){
     const collection = db.collection('posts')

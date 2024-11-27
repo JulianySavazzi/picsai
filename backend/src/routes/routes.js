@@ -1,6 +1,6 @@
 import express from "express"
 import multer from "multer"
-import {listPosts, saveNewPost, uploadImage, updateNewPost, deletePostById} from "../controller/postsController.js"
+import {listPosts, saveNewPost, uploadImage, updateNewPost, deletePostById, getPostById} from "../controller/postsController.js"
 import cors from "cors"
 
 const corsOptions = {
@@ -23,11 +23,14 @@ const upload = multer({storage: storage})
 
 //Express routes
 const routes = (app) => {
-    app.use(express.json())
+    app.use(express.json()) //for all responses parsed for json
     app.use(cors(corsOptions))
 
     //list all posts
     app.get("/posts", listPosts)
+
+    //list single post by id
+    app.get("/posts/:id", getPostById)
 
     //create new post
     app.post("/posts", saveNewPost)

@@ -1,5 +1,5 @@
 //functions for routes response here and crud, use gemini service
-import {getAllPosts, createPost, updatePost, deletePost} from "../models/postModel.js"
+import {getAllPosts, createPost, updatePost, deletePost, getPostById} from "../models/postModel.js"
 import fs from "fs" //native library for filesystem in node.js
 import generateDescriptionWithGemini from "../services/gemini.js"
 
@@ -7,6 +7,18 @@ import generateDescriptionWithGemini from "../services/gemini.js"
 export async function listPosts(request, response){
     const posts = await getAllPosts()
     response.status(200).json(posts)
+}
+
+export async function getPostById(request, response){
+    const id = request.params.id;
+
+    try{
+        const post = await getPostById(id)
+        response.status(200).json(post)
+    } catch (error) {
+    console.error(error.message)
+    response.status(500).json({"Erro no upload": "Falha na requisição!"})
+    }
 }
 
 //save new document in collection posts
