@@ -17,7 +17,7 @@ export async function saveNewPost(request, response) {
         response.status(200).json(created)
     } catch (error) {
         console.log(error.message)
-        response.status(500).json({"Erro": "Falha na requisição!"})
+        response.status(500).json({"Erro ao salvar": "Falha na requisição!"})
     }
 }
 
@@ -37,7 +37,7 @@ export async function uploadImage(request, response) {
         response.status(200).json(createdPost)
     } catch (error) {
         console.error(error.message)
-        response.status(500).json({"Erro": "Falha na requisição!"})
+        response.status(500).json({"Erro no upload": "Falha na requisição!"})
     }
 }
 
@@ -59,6 +59,18 @@ export async function updateNewPost(request, response) {
         response.status(200).json(savedPost)
     } catch (error) {
         console.error(error.message)
-        response.status(500).json({"Erro": "Falha na requisição!"})
+        response.status(500).json({"Erro ao atualizar": "Falha na requisição!"})
+    }
+}
+
+export async function deletePostById(request, response) {
+    const id = request.params.id;
+
+    try {
+        await deletePost(id);
+        response.status(204).send();
+    } catch (error) {
+        console.error(error.message);
+        response.status(500).json({ error: "Erro ao deletar o post" });
     }
 }

@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ec999b85-2b59-4abe-aa58-af5baf602899" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/services.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/controller/postsController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/models/postModel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/routes/routes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/services/gemini.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ec999b85-2b59-4abe-aa58-af5baf602899" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +36,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/julianysavazzi/Developer/instabyte",
+    "last_opened_file_path": "/Users/julianysavazzi/Developer/instabyte/frontend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,6 +46,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -72,6 +70,7 @@
       <workItem from="1732215081834" duration="5707000" />
       <workItem from="1732391045571" duration="1013000" />
       <workItem from="1732468651845" duration="4919000" />
+      <workItem from="1732625892187" duration="14784000" />
     </task>
     <servers />
   </component>
