@@ -9,15 +9,15 @@ export async function listPosts(request, response){
     response.status(200).json(posts)
 }
 
-export async function getPostById(request, response){
+export async function getSinglePostById(request, response){
     const id = request.params.id;
 
     try{
         const post = await getPostById(id)
         response.status(200).json(post)
     } catch (error) {
-    console.error(error.message)
-    response.status(500).json({"Erro no upload": "Falha na requisição!"})
+        console.error(error.message)
+        response.status(500).json({"Erro": "Falha na requisição!"})
     }
 }
 
@@ -44,12 +44,18 @@ export async function uploadImage(request, response) {
     try{
         const createdPost = await createPost(post) //create and return id from created post
         const updatedImage = `uploads/${createdPost.insertedId}.png` //upload png file path
-        fs.renameSync(request.file.path, updatedImage) //rename file and move temp file for upload directory
+
+        fs.copyFileSync(request.file.path, updatedImage) //copy file por uploads directory
+        if(fs.existsSync(updatedImage)) {
+            // fs.unlinkSync(request.file.path) //remove temp file
+            fs.renameSync(request.file.path, updatedImage) //rename file in uploads directory
+        } else response.status(504).json({"Erro": "Falha ao copiar arquivo!"})
+
         post.url_image = `/uploads/${createdPost.insertedId}.png` //set in post a correct image URL
         response.status(200).json(createdPost)
     } catch (error) {
         console.error(error.message)
-        response.status(500).json({"Erro no upload": "Falha na requisição!"})
+        response.status(500).json({"Erro no upload": `Falha na requisição! `})
     }
 }
 
@@ -61,10 +67,15 @@ export async function updateNewPost(request, response) {
         const imgBuffer = fs.readFileSync(`uploads/${id}.png`) //read file
         const description = await generateDescriptionWithGemini(imgBuffer) //create image description using gemini Ai
 
+        //for generate new alt, using AI description
+        const textPrefix = "Aqui está uma descrição da imagem em português do Brasil:"
+        const newAlt = description.slice(textPrefix.length)
+        const textTrim = newAlt.indexOf('.')
+
         const updatedPost = { //set data for update
             description: description,
             url_image: urlImage,
-            alt: request.body.alt
+            alt: newAlt.slice(0, textTrim)
         }
 
         const savedPost = await updatePost(id, updatedPost)
