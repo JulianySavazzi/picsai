@@ -17,7 +17,7 @@ export async function getSinglePostById(request, response){
         response.status(200).json(post)
     } catch (error) {
         console.error(error.message)
-        response.status(500).json({"Erro": "Falha na requisição!"})
+        response.status(500).json({"Erro": "Falha na requisição!"+error.message})
     }
 }
 
@@ -29,7 +29,7 @@ export async function saveNewPost(request, response) {
         response.status(200).json(created)
     } catch (error) {
         console.log(error.message)
-        response.status(500).json({"Erro ao salvar": "Falha na requisição!"})
+        response.status(500).json({"Erro ao salvar": "Falha na requisição!"+error.message})
     }
 }
 
@@ -43,11 +43,12 @@ export async function uploadImage(request, response) {
 
     try{
         const createdPost = await createPost(post) //create and return id from created post
+
         const updatedImage = `uploads/${createdPost.insertedId}.png` //upload png file path
+        if(!!updatedImage) console.error("Nao foi possivel fazer upload da imagem!")
 
         fs.copyFileSync(request.file.path, updatedImage) //copy file por uploads directory
         if(fs.existsSync(updatedImage)) {
-            // fs.unlinkSync(request.file.path) //remove temp file
             fs.renameSync(request.file.path, updatedImage) //rename file in uploads directory
         } else response.status(504).json({"Erro": "Falha ao copiar arquivo!"})
 
@@ -55,7 +56,7 @@ export async function uploadImage(request, response) {
         response.status(200).json(createdPost)
     } catch (error) {
         console.error(error.message)
-        response.status(500).json({"Erro no upload": `Falha na requisição! `})
+        response.status(500).json({"Erro no upload": `Falha na requisição! `+error.message})
     }
 }
 
@@ -65,6 +66,7 @@ export async function updateNewPost(request, response) {
     const urlImage = `${host}/${id}.png` //url from image in host
     try{
         const imgBuffer = fs.readFileSync(`uploads/${id}.png`) //read file
+        if(!!imgBuffer) console.error("Nao foi possivel ler a imagem!")
         const description = await generateDescriptionWithGemini(imgBuffer) //create image description using gemini Ai
 
         //for generate new alt, using AI description
@@ -82,7 +84,7 @@ export async function updateNewPost(request, response) {
         response.status(200).json(savedPost)
     } catch (error) {
         console.error(error.message)
-        response.status(500).json({"Erro ao atualizar": "Falha na requisição!"})
+        response.status(500).json({"Erro ao atualizar": "Falha na requisição! "+error.message})
     }
 }
 
