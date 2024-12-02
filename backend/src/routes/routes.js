@@ -4,7 +4,7 @@ import {listPosts, saveNewPost, uploadImage, updateNewPost, deletePostById, getS
 import cors from "cors"
 
 const corsOptions = {
-    origin: process.env.myBackendHost,
+    origin: process.env.myFrontendHost,
     optionsSuccessStatus: 200
 }
 
